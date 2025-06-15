@@ -1,0 +1,61 @@
+﻿@model Cart
+
+@{
+	ViewData["Title"] = "Your Cart";
+	decimal totalPrice = Model.CartItems.Sum(ci => ci.TotalPrice);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+<body>
+	@if (Model.CartItems.Count == 0)
+	{
+		<h4>Your cart is empty.</h4>
+	}
+	else
+	{
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>CartItemId</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+						
+				@foreach (var item in Model.CartItems)
+				{
+					<tr>
+						<td>@item.Item.Name</td>
+						<td>@item.Id</td>
+						<td>@item.Quantity</td>
+						<td>@item.Item.Price.FormatAsUSD()</td>
+						<td colspan="2">
+							<form method="post" asp-controller="Cart" asp-action="Delete"
+									asp-route-cartItemId="@item.Id">
+								<input type="hidden" name="itemId" value="@item.Id" />
+								<button type="submit" class="btn btn-danger">Remove</button>
+							</form>
+						</td>
+					</tr>
+
+				}
+			
+		</table>
+
+		<div class="text-md-start text-success">
+			Total price: @totalPrice.FormatAsUSD()
+		</div>
+	}
+</body>
+</html>

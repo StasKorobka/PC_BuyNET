@@ -1,0 +1,46 @@
+﻿@model List<Item>
+
+@{
+	ViewData["Title"] = "Item list";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+<body>
+	<h3>Item list</h3>
+	<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-4">
+		@foreach (var item in Model)
+		{
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<img src="@item.ImageUrl"
+						 class="card-img-top" alt="Item image" height="260px"
+						style="object-fit:cover">
+					<div class="card-body">
+						<h5 class="card-title">@item.Name</h5>
+						<p class="card-text">@item.Description</p>
+						<p class="card-text">
+							<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
+							<strong>Category:</strong> @item.Type
+						</p>
+					</div>
+					<div class="card-footer d-flex justify-content-between">
+						<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">
+							<button class="btn btn-sm btn-success"><i class="bi bi-cart"></i>  Add to cart</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</body>
+</html>
+
+
