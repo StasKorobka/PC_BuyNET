@@ -17,114 +17,114 @@ namespace PC_BuyNET.Data
         }
 
         //ITEMS
-        public async Task<List<Item>> GetItemsAsync()
-        {
-            return await Items.ToListAsync();
-        }
+        //public async Task<List<Item>> GetItemsAsync()
+        //{
+        //    return await Items.ToListAsync();
+        //}
 
-        public async Task<Item> GetItemByIdAsync(int id)
-        {
-            return await Items.FindAsync(id);
-        }
+        //public async Task<Item> GetItemByIdAsync(int id)
+        //{
+        //    return await Items.FindAsync(id);
+        //}
 
-        public async Task AddItemAsync(Item item)
-        {
-            Items.Add(item);
-            await SaveChangesAsync();
-        }
+        //public async Task AddItemAsync(Item item)
+        //{
+        //    Items.Add(item);
+        //    await SaveChangesAsync();
+        //}
 
-        public async Task UpdateItemAsync(Item item)
-        {
-            Items.Update(item);
-            await SaveChangesAsync();
-        }
+        //public async Task UpdateItemAsync(Item item)
+        //{
+        //    Items.Update(item);
+        //    await SaveChangesAsync();
+        //}
 
-        public async Task DeleteItemAsync(int id)
-        {
-            var item = await GetItemByIdAsync(id);
-            if (item != null)
-            {
-                Items.Remove(item);
-                await SaveChangesAsync();
-            }
-        }
+        //public async Task DeleteItemAsync(int id)
+        //{
+        //    var item = await GetItemByIdAsync(id);
+        //    if (item != null)
+        //    {
+        //        Items.Remove(item);
+        //        await SaveChangesAsync();
+        //    }
+        //}
 
         //CART
 
-        public async Task<Cart> GetCartByUserIdAsync(string userId)
-        {
-            return await Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Item)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-        }
+        //public async Task<Cart> GetCartByUserIdAsync(string userId)
+        //{
+        //    return await Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(ci => ci.Item)
+        //        .FirstOrDefaultAsync(c => c.UserId == userId);
+        //}
 
-        public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
-        {
-            return await Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Item)
-                .SelectMany(c => c.CartItems)
-                .FirstOrDefaultAsync(ci => ci.Id == cartItemId);
-        }
+        //public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
+        //{
+        //    return await Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(ci => ci.Item)
+        //        .SelectMany(c => c.CartItems)
+        //        .FirstOrDefaultAsync(ci => ci.Id == cartItemId);
+        //}
 
-        public async Task DeleteCartItemAsync(string userId, CartItem cartitem)
-        {
-            var cart = await GetCartByUserIdAsync(userId);
+        //public async Task DeleteCartItemAsync(string userId, CartItem cartitem)
+        //{
+        //    var cart = await GetCartByUserIdAsync(userId);
 
-            if (cart != null)
-            {
-                if (cartitem.Quantity > 1)
-                {
-                    cartitem.Quantity--;
-                }
-                else
-                {
-                    cart.CartItems.Remove(cartitem);
-                }
+        //    if (cart != null)
+        //    {
+        //        if (cartitem.Quantity > 1)
+        //        {
+        //            cartitem.Quantity--;
+        //        }
+        //        else
+        //        {
+        //            cart.CartItems.Remove(cartitem);
+        //        }
                     
-                await SaveChangesAsync();
-            }
-        }
+        //        await SaveChangesAsync();
+        //    }
+        //}
 
-        public async Task AddItemToCartAsync(string userId, int itemId)
-        {
-            var cart = await GetCartByUserIdAsync(userId);
-            var item = await GetItemByIdAsync(itemId);
+        //public async Task AddItemToCartAsync(string userId, int itemId)
+        //{
+        //    var cart = await GetCartByUserIdAsync(userId);
+        //    var item = await GetItemByIdAsync(itemId);
 
             
-            if (IsItemInCart(userId, itemId))
-            {
-                var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ItemId == itemId);
-                cartItem.Quantity++;
-            }
-            else
-            {
-                var cartItem = new CartItem 
-                { 
-                    ItemId = itemId,
-                    Item = item,
-                    CartId = cart.Id,
-                    Cart = cart,
-                };
+        //    if (IsItemInCart(userId, itemId))
+        //    {
+        //        var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ItemId == itemId);
+        //        cartItem.Quantity++;
+        //    }
+        //    else
+        //    {
+        //        var cartItem = new CartItem 
+        //        { 
+        //            ItemId = itemId,
+        //            Item = item,
+        //            CartId = cart.Id,
+        //            Cart = cart,
+        //        };
                 
-                cart.CartItems.Add(cartItem);
-            }
+        //        cart.CartItems.Add(cartItem);
+        //    }
 
-            await SaveChangesAsync();
-        }
+        //    await SaveChangesAsync();
+        //}
 
-        public bool IsItemInCart(string userId, int itemId)
-        {
-            var cart = GetCartByUserIdAsync(userId).Result;
+        //public bool IsItemInCart(string userId, int itemId)
+        //{
+        //    var cart = GetCartByUserIdAsync(userId).Result;
 
-            if (cart != null)
-            {
-                return cart.CartItems.Any(ci => ci.ItemId == itemId);
-            }
+        //    if (cart != null)
+        //    {
+        //        return cart.CartItems.Any(ci => ci.ItemId == itemId);
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
         
         
         // seed data for initial items

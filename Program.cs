@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data;
+using PC_BuyNET.Data.Services;
 
 namespace PC_BuyNET
 {
@@ -25,6 +25,8 @@ namespace PC_BuyNET
                 .AddEntityFrameworkStores<PC_BuyNETDbContext>();
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<ItemService>();
+            builder.Services.AddScoped<CartService>();
             //builder.Services.AddScoped<PC_BuyNETDbContext>();
 
             var app = builder.Build();
