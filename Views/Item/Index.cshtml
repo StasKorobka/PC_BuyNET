@@ -14,32 +14,77 @@
 
 </head>
 <body>
-	<h3>Item list</h3>
-	<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-4">
-		@foreach (var item in Model)
-		{
-			<div class="col">
-				<div class="card h-100 shadow-sm">
-					<img src="@item.ImageUrl"
-						 class="card-img-top" alt="Item image" height="260px"
-						style="object-fit:cover">
-					<div class="card-body">
-						<h5 class="card-title">@item.Name</h5>
-						<p class="card-text">@item.Description</p>
-						<p class="card-text">
-							<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
-							<strong>Category:</strong> @item.Type
-						</p>
+<h3>Item list</h3>
+<div class="mt-4">
+	<div class="row gx-0">
+		<!-- Sidebar -->
+		<div class="col-md-2" >
+			<div class="card shadow-sm p-3 sticky-top h-100 rounded-0 border-end" style="top: 1rem;">
+				<form method="get" asp-controller="Item" asp-action="Search">
+					<h5 class="mb-3">Filter Items</h5>
+
+					<!-- Category Selector -->
+					<div class="mb-3">
+						<label for="category" class="form-label">Category</label>
+						<select class="form-select" id="category" name="category">
+							<option value="">All Categories</option>
+							<option value="CPU">CPU</option>
+							<option value="GPU">GPU</option>
+							<option value="Monitor">Monitor</option>
+							<option value="Keyboard">Keyboard</option>
+							<!-- Add more as needed -->
+						</select>
 					</div>
-					<div class="card-footer d-flex justify-content-between">
-						<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">
-							<button class="btn btn-sm btn-success"><i class="bi bi-cart"></i>  Add to cart</button>
-						</form>
+
+					<!-- Price Range -->
+					<div class="mb-3">
+						<label for="priceRange" class="form-label">Max Price: <span id="priceLabel">1000</span></label>
+						<input type="range" class="form-range" id="priceRange" name="maxPrice" min="0" max="5000" value="1000" oninput="priceLabel.innerText = this.value">
 					</div>
-				</div>
+
+					<!-- Filter Button -->
+					<button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+				</form>
+				
 			</div>
-		}
+		</div>
+			
+		<!-- Main Items Content -->
+		<div class="col-md-10">
+			<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-4">
+				@foreach (var item in Model)
+				{
+					<div class="col">
+						<div class="card h-100 shadow-sm">
+							<a class="link-none" asp-controller="Item" asp-action="ViewItem"
+								asp-route-itemID="@item.Id">
+								<img src="@item.ImageUrl"
+										class="card-img-top" alt="Item image" height="260px"
+										style="object-fit:cover">
+								<div class="card-body">
+									<h5 class="card-title">@item.Name</h5>
+									<p class="card-text">@item.Description</p>
+									<p class="card-text">
+										<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
+										<strong>Category:</strong> @item.Type
+									</p>
+								</div>
+							</a>
+							<div class="card-footer d-flex justify-content-between">
+								<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">
+									<button class="btn btn-sm btn-success"><i class="bi bi-cart"></i>  Add to cart</button>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				}
+			</div>
+		
+		</div>
 	</div>
+</div>
+	
 </body>
 </html>
 

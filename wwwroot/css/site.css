@@ -26,3 +26,7 @@ body {
 .header-gray {
     background-color: #b3b3b3;
 }
+.link-none {
+    color: black;
+    text-decoration: none; /* no underline */
+}

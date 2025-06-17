@@ -35,11 +35,12 @@ namespace PC_BuyNET.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string cartItemId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int cartItemId)
         {
             var userId = _userManager.GetUserId(User);
 
-            var cartItem = await _cartService.GetCartItemByIdAsync(int.Parse(cartItemId));
+            var cartItem = await _cartService.GetCartItemByIdAsync(cartItemId);
 
             await _cartService.DeleteCartItemAsync(userId, cartItem);
             

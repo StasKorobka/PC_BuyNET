@@ -16,117 +16,6 @@ namespace PC_BuyNET.Data
             
         }
 
-        //ITEMS
-        //public async Task<List<Item>> GetItemsAsync()
-        //{
-        //    return await Items.ToListAsync();
-        //}
-
-        //public async Task<Item> GetItemByIdAsync(int id)
-        //{
-        //    return await Items.FindAsync(id);
-        //}
-
-        //public async Task AddItemAsync(Item item)
-        //{
-        //    Items.Add(item);
-        //    await SaveChangesAsync();
-        //}
-
-        //public async Task UpdateItemAsync(Item item)
-        //{
-        //    Items.Update(item);
-        //    await SaveChangesAsync();
-        //}
-
-        //public async Task DeleteItemAsync(int id)
-        //{
-        //    var item = await GetItemByIdAsync(id);
-        //    if (item != null)
-        //    {
-        //        Items.Remove(item);
-        //        await SaveChangesAsync();
-        //    }
-        //}
-
-        //CART
-
-        //public async Task<Cart> GetCartByUserIdAsync(string userId)
-        //{
-        //    return await Carts
-        //        .Include(c => c.CartItems)
-        //        .ThenInclude(ci => ci.Item)
-        //        .FirstOrDefaultAsync(c => c.UserId == userId);
-        //}
-
-        //public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
-        //{
-        //    return await Carts
-        //        .Include(c => c.CartItems)
-        //        .ThenInclude(ci => ci.Item)
-        //        .SelectMany(c => c.CartItems)
-        //        .FirstOrDefaultAsync(ci => ci.Id == cartItemId);
-        //}
-
-        //public async Task DeleteCartItemAsync(string userId, CartItem cartitem)
-        //{
-        //    var cart = await GetCartByUserIdAsync(userId);
-
-        //    if (cart != null)
-        //    {
-        //        if (cartitem.Quantity > 1)
-        //        {
-        //            cartitem.Quantity--;
-        //        }
-        //        else
-        //        {
-        //            cart.CartItems.Remove(cartitem);
-        //        }
-                    
-        //        await SaveChangesAsync();
-        //    }
-        //}
-
-        //public async Task AddItemToCartAsync(string userId, int itemId)
-        //{
-        //    var cart = await GetCartByUserIdAsync(userId);
-        //    var item = await GetItemByIdAsync(itemId);
-
-            
-        //    if (IsItemInCart(userId, itemId))
-        //    {
-        //        var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ItemId == itemId);
-        //        cartItem.Quantity++;
-        //    }
-        //    else
-        //    {
-        //        var cartItem = new CartItem 
-        //        { 
-        //            ItemId = itemId,
-        //            Item = item,
-        //            CartId = cart.Id,
-        //            Cart = cart,
-        //        };
-                
-        //        cart.CartItems.Add(cartItem);
-        //    }
-
-        //    await SaveChangesAsync();
-        //}
-
-        //public bool IsItemInCart(string userId, int itemId)
-        //{
-        //    var cart = GetCartByUserIdAsync(userId).Result;
-
-        //    if (cart != null)
-        //    {
-        //        return cart.CartItems.Any(ci => ci.ItemId == itemId);
-        //    }
-
-        //    return false;
-        //}
-        
-        
         // seed data for initial items
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -163,7 +52,44 @@ namespace PC_BuyNET.Data
                     Type = "Mouse",
                     Price = 80.00m,
                     ImageUrl = "https://m.media-amazon.com/images/I/61QY3V6A-NL.jpg"
+                },
+                new Item
+                {
+                    Id = 4,
+                    Name = "Gaming Monitor",
+                    Description = "27-inch 144Hz gaming monitor with G-Sync.",
+                    Type = "Monitor",
+                    Price = 300.00m,
+                    ImageUrl = "https://content.rozetka.com.ua/goods/images/big/404971764.jpg"
+                },
+                new Item
+                {
+                    Id = 5,
+                    Name = "MSI GeForce RTX4070 12Gb VENTUS 3X E1 OC (RTX 4070 VENTUS 3X E1 12G OC)",
+                    Description = "PCI-Express 4.0, 12 ГБ, GDDR6, 192 Bit, Boost - 2505 MHz, 3 x DisplayPort 1.4a, 1 x HDMI 2.1а, 8 pin, 200 W, 308 x 120 x 43 mm",
+                    Type = "Graphics card",
+                    Price = 800.00m,
+                    ImageUrl = "https://content2.rozetka.com.ua/goods/images/big/525946530.jpg"
+                },
+                new Item
+                {
+                    Id = 6,
+                    Name = "COBRA Advanced (A56.32.S10.46.19908)",
+                    Description = "AMD Ryzen 5 5600 (3.5 - 4.4 GHz) / RAM 32 GB / SSD 1 TB / nVidia GeForce RTX 4060, 8 GB / Windows 11 / LAN ",
+                    Type = "Gaming PC",
+                    Price = 750.00m,
+                    ImageUrl = "https://content1.rozetka.com.ua/goods/images/big/555282141.jpg"
+                },
+                new Item
+                {
+                    Id = 7,
+                    Name = "Gaming Headset",
+                    Description = "Comfortable gaming headset with surround sound.",
+                    Type = "Headset",
+                    Price = 100.00m,
+                    ImageUrl = "https://m.media-amazon.com/images/G/01/apparel/rcxgs/tile._CB483369110_.gif"
                 }
+
 
             );
 

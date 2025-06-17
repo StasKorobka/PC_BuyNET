@@ -27,6 +27,7 @@ namespace PC_BuyNET
 
             builder.Services.AddScoped<ItemService>();
             builder.Services.AddScoped<CartService>();
+            builder.Services.AddScoped<SearchService>();
             //builder.Services.AddScoped<PC_BuyNETDbContext>();
 
             var app = builder.Build();
@@ -53,7 +54,7 @@ namespace PC_BuyNET
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Item}/{action=Index}/{id?}");
             app.MapRazorPages();
 
             app.Run();

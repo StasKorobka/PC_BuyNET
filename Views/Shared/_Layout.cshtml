@@ -28,13 +28,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
                         </li>
+                        <!-- Center section: Search Bar -->
+                        <div class="flex-fill d-flex justify-content-center" >
+                            <div style="width: 100%; max-width: 600px;">
+                                <form asp-controller="Item" asp-action="Search" method="get" class="d-flex">
+                                    <input class="form-control me-2" type="search" name="searchQuery" placeholder="Search items..." aria-label="Search">
+                                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
                     </ul>
+
                     <partial name="_LoginPartial" />
                 </div>
+                
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin:0px">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
