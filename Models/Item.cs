@@ -4,15 +4,19 @@ namespace PC_BuyNET.Models
 {
     public class Item
     {
-
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; } = "item";
+
+        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public string? Description { get; set; }
-        
+
         [Required]
-        public string Type { get; set; }
+        public int CategoryId { get; set; }
+
+        [Required]
+        public Category Category { get; set; }
 
         [Range(0, 100_000)]
         public decimal Price { get; set; }

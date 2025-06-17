@@ -13,9 +13,7 @@ namespace PC_BuyNET
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(connectionString));
-
+           
             builder.Services.AddDbContext<PC_BuyNETDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -28,7 +26,8 @@ namespace PC_BuyNET
             builder.Services.AddScoped<ItemService>();
             builder.Services.AddScoped<CartService>();
             builder.Services.AddScoped<SearchService>();
-            //builder.Services.AddScoped<PC_BuyNETDbContext>();
+            builder.Services.AddScoped<CategoryService>();
+            
 
             var app = builder.Build();
 

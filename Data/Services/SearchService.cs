@@ -14,9 +14,12 @@ namespace PC_BuyNET.Data.Services
             _itemService = itemService;
         }
 
-        public async Task<List<Item>> SearchItemsAsync(string searchQuerry, string? category, decimal? maxPrice )
+        public async Task<List<Item>> SearchItemsAsync(string? searchQuerry, string? category, decimal? maxPrice )
         {
-            var items = _context.Items.AsQueryable();
+            var items = _context.Items
+                .Include(category => category.Category)
+                .AsQueryable();
+
 
             if (!string.IsNullOrEmpty(searchQuerry))
             {
@@ -25,8 +28,9 @@ namespace PC_BuyNET.Data.Services
                         i.Description.ToLower().Contains(searchQuerry.ToLower()));
 
             }
-            if (!string.IsNullOrWhiteSpace(category))
-                items = items.Where(i => i.Type == category);
+            if (!string.IsNullOrWhiteSpace(category) &&
+                category.ToLower() != "all")
+                items = items.Where(i => i.Category.Name == category);
 
             if (maxPrice.HasValue)
                 items = items.Where(i => i.Price <= maxPrice.Value);

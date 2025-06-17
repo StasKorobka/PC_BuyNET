@@ -12,6 +12,7 @@ namespace PC_BuyNET.Controllers
         private readonly PC_BuyNETDbContext _context;
         private readonly ItemService _itemService;
         private readonly CartService _cartService;
+        private readonly CategoryService _categoryService;
         private readonly SearchService _searchService;
         private readonly UserManager<User> _userManager;
 
@@ -19,12 +20,14 @@ namespace PC_BuyNET.Controllers
         public ItemController(PC_BuyNETDbContext context,
             ItemService itemService,
             CartService cartService,
+            CategoryService categoryService,
             SearchService searchService,
             UserManager<User> userManager)
         {
             _context = context;
             _itemService = itemService;
             _cartService = cartService;
+            _categoryService = categoryService;
             _searchService = searchService;
             _userManager = userManager;
         }
@@ -32,6 +35,9 @@ namespace PC_BuyNET.Controllers
         public async Task<IActionResult> Index()
         {
             var items = await _itemService.GetItemsAsync();
+            var categories = await _categoryService.GetCategoriesAsync();
+
+            ViewBag.Categories = categories;
 
             return View(items);
         }
@@ -60,14 +66,12 @@ namespace PC_BuyNET.Controllers
 
         public async Task<IActionResult> Search(string? searchQuery, string? category, decimal? maxPrice)
         {
-            //if (string.IsNullOrEmpty(searchQuery))
-            //{
-            //    return RedirectToAction("Index");
-            //}
-
             var items = await _searchService.SearchItemsAsync(searchQuery, category, maxPrice);
+            var categories = await _categoryService.GetCategoriesAsync();
 
-            if (items == null)
+            ViewBag.Categories = categories;
+
+            if (items == null || items.Count == 0)
             {
                 ViewBag.Message = "No items found.";
             }

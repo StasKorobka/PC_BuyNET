@@ -13,7 +13,9 @@ namespace PC_BuyNET.Data.Services
         }
         public async Task<List<Item>> GetItemsAsync()
         {
-            return await _context.Items.ToListAsync();
+            return await _context.Items
+                .Include(i => i.Category)
+                .ToListAsync();
         }
 
         public async Task<Item> GetItemByIdAsync(int id)
