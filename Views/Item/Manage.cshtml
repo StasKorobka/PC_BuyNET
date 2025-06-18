@@ -1,0 +1,79 @@
+﻿@model List<Item>
+
+@{
+	ViewData["Title"] = "Items manager";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+<body>
+	<table class="table table-bordered table-full-width">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Category</th>
+				<th class="price-column">Price</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var item in Model){
+				<tr id="row-@item.Id">
+					<td>@item.Id</td>
+					<td>@item.Name</td>
+					<td>@item.Description</td>
+					<td>@item.Category.Name</td>
+					<td>@item.Price.FormatAsUSD()</td>
+					<td class="action-cell">
+						<div class="button-container">
+							<a asp-controller="Item" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
+								<i class="bi bi-pencil-square"></i> Edit
+							</a>
+							@* asp-controller="Item" asp-action="Delete" asp-route-id="@item.Id" *@
+							<a class="btn btn-outline-danger delete-btn" data-id="@item.Id">
+								<i class="bi bi-trash"></i> Delete
+							</a>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>	
+	<a class="btn btn-primary" asp-controller="Item" asp-action="Create">Create new item</a>
+</body>
+</html>
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$(".delete-btn").click(function () {
+				var itemId = $(this).data("id");
+
+				if (confirm("Are you sure you want to delete this item?")) {
+					$.ajax({
+						url: '/Item/Delete/' + itemId,
+						type: 'DELETE',
+						success: function () {
+							$('#row-' + itemId).remove();
+						},
+						error: function () {
+							alert("Failed to delete item.");
+						}
+					});
+				}
+			});
+		});
+	</script>
+}
+
+

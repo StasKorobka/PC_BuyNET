@@ -42,10 +42,6 @@ namespace PC_BuyNET
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<PC_BuyNETDbContext>();
 
-
-
-
-
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())

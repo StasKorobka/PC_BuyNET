@@ -30,5 +30,10 @@ namespace PC_BuyNET.Models
             if (string.IsNullOrEmpty(value)) return value;
             return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
         }
+
+        public static string TruncatePrice(decimal price)
+        {
+            return price.ToString("C2");
+        }
     }
 }

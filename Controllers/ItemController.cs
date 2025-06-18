@@ -82,6 +82,13 @@ namespace PC_BuyNET.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Manage()
+        {
+            var items = await _itemService.GetItemsAsync();
+            return View(items);
+        }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
@@ -103,6 +110,46 @@ namespace PC_BuyNET.Controllers
 
             ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name", item.CategoryId);
             return View(item);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var item = await _itemService.GetItemByIdAsync(id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name", item.CategoryId);
+            return View(item);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(Item item)
+        {
+            await _itemService.UpdateItemAsync(item);
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _itemService.DeleteItemAsync(id);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+
+            return NoContent(); // 204
         }
     }
 }

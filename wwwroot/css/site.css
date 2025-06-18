@@ -1,9 +1,10 @@
 html {
   font-size: 14px;
+  --item-talbe-border-color: #E0E0E0;
 }
 
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -36,4 +37,33 @@ body {
 .item-list-title {
     margin-left: 218px;
     margin-bottom: -23px
+}
+.table-full-width {
+    width: 100%;
+    table-layout: auto;
+    border-color: #4B5EAA; /* Darker border color */
+}
+
+    .table-full-width th,
+    .table-full-width td {
+        border-color: #4B5EAA; /* Apply darker border to cells */
+    }
+
+.price-column {
+    width: 120px; /* Wider price column */
+}
+
+.action-cell {
+    min-width: 200px;
+    white-space: nowrap;
+}
+
+.button-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+}
+
+.btn {
+    font-size: 1rem;
 }

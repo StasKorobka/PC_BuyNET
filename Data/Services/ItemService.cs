@@ -43,6 +43,10 @@ namespace PC_BuyNET.Data.Services
                 _context.Items.Remove(item);
                 await _context.SaveChangesAsync();
             }
+            else
+            {
+                throw new KeyNotFoundException($"Item with ID {id} not found.");
+            }
         }
     }
 }

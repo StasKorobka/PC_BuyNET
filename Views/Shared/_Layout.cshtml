@@ -28,6 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
                         </li>
+
                         <!-- Center section: Search Bar -->
                         <div class="flex-fill d-flex justify-content-center" >
                             <div style="width: 100%; max-width: 600px;">
@@ -40,7 +41,7 @@
                     </ul>
                     @if(User.IsInRole("Admin"))
                     {
-                        <a class="nav-link text-dark" asp-controller="Item" asp-action="Create">Crt</a>
+                        <a class="nav-link text-dark" asp-controller="Item" asp-action="Manage">Manager</a>
                     }
                     
                     <partial name="_LoginPartial" />
@@ -49,7 +50,7 @@
             </div>
         </nav>
     </header>
-    <div class="container" style="margin:0px">
+    <div class="container" style="margin:0px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
