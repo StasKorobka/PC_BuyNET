@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data;
 using PC_BuyNET.Data.Services;
+using PC_BuyNET.Models;
 
 namespace PC_BuyNET.Controllers
 {
@@ -77,6 +79,30 @@ namespace PC_BuyNET.Controllers
             }
 
             return View("Index", items);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
+
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Item item)
+        {
+            
+            if (item != null)
+            {
+                await _itemService.AddItemAsync(item);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name", item.CategoryId);
+            return View(item);
         }
     }
 }

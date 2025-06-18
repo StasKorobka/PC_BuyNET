@@ -2,7 +2,12 @@
 @using Microsoft.AspNetCore.Antiforgery
 @{
 	ViewData["Title"] = "Your Cart";
-	decimal totalPrice = Model.CartItems.Sum(ci => ci.TotalPrice);
+
+	decimal totalPrice = 0;
+	@if (User.Identity.IsAuthenticated) 
+	{
+		totalPrice = Model.CartItems.Sum(ci => ci.TotalPrice);
+	}
 }
 
 <!DOCTYPE html>

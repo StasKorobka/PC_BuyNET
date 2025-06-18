@@ -38,7 +38,11 @@
                             </div>
                         </div>
                     </ul>
-
+                    @if(User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link text-dark" asp-controller="Item" asp-action="Create">Crt</a>
+                    }
+                    
                     <partial name="_LoginPartial" />
                 </div>
                 

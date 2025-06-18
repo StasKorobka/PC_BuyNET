@@ -3,6 +3,7 @@
 @{
 	ViewData["Title"] = "Item list";
 	var categories = ViewBag.Categories as List<Category>;
+
 }
 
 <!DOCTYPE html>
@@ -74,7 +75,8 @@
 										style="object-fit:cover">
 								<div class="card-body">
 									<h5 class="card-title">@item.Name</h5>
-									<p class="card-text">@item.Description</p>
+										<p class="card-text">@Item.Truncate(item.Description)</p>
+
 									<p class="card-text">
 										<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
 										<strong>Category:</strong> @item.Category.Name
@@ -97,6 +99,11 @@
 	</div>
 </div>
 	
+	<p>
+		Roles:
+		@(User.IsInRole("Admin") ? "Admin" : "Not Admin")
+	</p>
+
 </body>
 </html>
 

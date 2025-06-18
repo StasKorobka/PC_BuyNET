@@ -103,7 +103,7 @@ namespace PC_BuyNET.Data
                 new Item
                 {
                     Id = 5,
-                    Name = "MSI GeForce RTX4070 12Gb VENTUS 3X E1 OC (RTX 4070 VENTUS 3X E1 12G OC)",
+                    Name = "MSI GeForce RTX4070 12Gb VENTUS 3X E1 ",
                     Description = "PCI-Express 4.0, 12 ГБ, GDDR6, 192 Bit, Boost - 2505 MHz, 3 x DisplayPort 1.4a, 1 x HDMI 2.1а, 8 pin, 200 W, 308 x 120 x 43 mm",
                     CategoryId = 5,
                     Price = 800.00m,
@@ -125,7 +125,34 @@ namespace PC_BuyNET.Data
                     Description = "Comfortable gaming headset with surround sound.",
                     CategoryId = 7,
                     Price = 100.00m,
-                    ImageUrl = "https://m.media-amazon.com/images/G/01/apparel/rcxgs/tile._CB483369110_.gif"
+                    ImageUrl = "https://cdn.27.ua/799/b0/83/7843971_16.jpeg"
+                },
+                new Item
+                {
+                    Id = 8,
+                    Name = "Razer Ornata V3 X Gaming Keyboard",
+                    Description = "Low-profile mechanical gaming keyboard with customizable RGB lighting.",
+                    CategoryId = 2,
+                    Price = 30.00m,
+                    ImageUrl = "https://images.prom.ua/5754698902_w600_h600_5754698902.jpg"
+                },
+                new Item
+                {
+                    Id = 9,
+                    Name = "MSI PRO 24.5-inch IPS 1920 x 1080 (FHD) Gaming Office Monitor",
+                    Description = "24.5-inch Broadened Display – Enjoy the upgraded canvas in the limited space.",
+                    CategoryId = 4,
+                    Price = 97.50m,
+                    ImageUrl = "https://asset.msi.com/resize/image/global/product/product_1724207954ab05b1ca8782cf0f7ef39ef6ca9a7d56.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png"
+                },
+                new Item
+                {
+                    Id = 10,
+                    Name = "HP Chromebook 14 Laptop",
+                    Description = "Intel Celeron N4120, 4 GB RAM, 64 GB eMMC, 14\" HD Display, Chrome OS, Thin Design, 4K Graphics, Long Battery Life, Ash Gray Keyboard",
+                    CategoryId = 1,
+                    Price = 140.00m,
+                    ImageUrl = "https://hp.widen.net/content/j3evgos0b0/png/j3evgos0b0.png?w=800&h=600&dpi=72&color=ffffff00"
                 }
 
 

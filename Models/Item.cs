@@ -22,5 +22,13 @@ namespace PC_BuyNET.Models
         public decimal Price { get; set; }
 
         public string? ImageUrl { get; set; } = "https://cdn.pixabay.com/photo/2016/10/21/20/45/texture-1759179_640.jpg";
+
+        
+        private const int MaxDescriptionLength = 60;
+        public static string Truncate(string value, int maxLength=MaxDescriptionLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
+        }
     }
 }
