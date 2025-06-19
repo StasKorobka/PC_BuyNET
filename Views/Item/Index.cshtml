@@ -4,6 +4,9 @@
 	ViewData["Title"] = "Item list";
 	var categories = ViewBag.Categories as List<Category>;
 
+	var selectedCategory = ViewBag.SelectedCategory as string ?? "All";
+	var maxPrice = ViewBag.MaxPrice ?? 1000;
+	var searchQuery = ViewBag.SearchQuery as string ?? string.Empty;
 }
 
 <!DOCTYPE html>
@@ -26,43 +29,57 @@
 	})
 
 
-<div class="mt-4">
-	<div class="row gx-0">
-		<!-- Sidebar -->
-		<div class="col-md-2" style="margin-top:-75px; margin-left:-10px">
-			<div class="card shadow-sm p-3 sticky-top h-100 rounded-0 border-end" style="top: 1rem;">
-				<form method="get" asp-controller="Item" asp-action="Search">
-					<h5 class="mb-3">Filter Items</h5>
+	<div class="mt-4">
+		<div class="row gx-0">
+			<!-- Sidebar -->
+			<div class="col-md-2" style="margin-top:-75px; margin-left:-10px">
+				<div class="card shadow-sm p-3 sticky-top h-100 rounded-0 border-end" style="top: 1rem;">
+					<form method="post" asp-controller="Item" asp-action="Search">
+						<h5 class="mb-3">Filter Items</h5>
 
-					<!-- Category Selector -->
-					<div class="mb-3">
-						<label for="category" class="form-label">Category</label>
-						<select class="form-select" id="category" name="category">
-							<option value="All">All</option>
-							@foreach (var category in categories)
-							{
-								<option value="@category.Name">@category.Name</option>
-							})
-							
-						</select>
-					</div>
+						<!-- Category Selector -->
+						<div class="mb-3">
+							<label for="category" class="form-label">Category</label>
+							<select class="form-select"  id="category" name="category">
+								
+								<option value="All">All</option>
+								@foreach (var category in categories)
+								{
+									<option value="@category.Name">@category.Name</option>
+								}
+								
+							</select>
+						</div>
 
-					<!-- Price Range -->
-					<div class="mb-3">
-						<label for="priceRange" class="form-label">Max Price: <span id="priceLabel">1000</span></label>
-						<input type="range" class="form-range" id="priceRange" name="maxPrice" min="0" max="5000" value="1000" oninput="priceLabel.innerText = this.value">
-					</div>
+						<!-- Price Range -->
+						<div class="mb-3">
+							<label for="priceRange" class="form-label">Max Price: <span id="priceLabel">1000</span></label>
+							<input type="range" class="form-range" id="priceRange" name="maxPrice" min="0" max="5000" value="@maxPrice" oninput="priceLabel.innerText = this.value">
+						</div>
 
-					<!-- Filter Button -->
-					<button type="submit" class="btn btn-primary w-100">Apply Filters</button>
-				</form>
+						<!-- Price order Selector -->
+						<div class="mb-3">
+							<label for="category" class="form-label">Filer price by</label>
+							<select class="form-select" id="category" name="priceOrder">
+									<option value="Ascending">Ascending</option>
+									<option value="Descending">Descending</option>
+							</select>
+						</div>
+
+						<!-- Filter Button -->
+						<button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+					</form>
 				
+					<a asp-action="Index" class="btn btn-secondary w-50" style="margin-top:12px">
+						<i class="bi bi-arrow-clockwise"></i>
+						Reset
+					</a>
+				</div>
 			</div>
-		</div>
 			
 		<!-- Main Items Content -->
 		<div class="col-md-10">
-			<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-4">
+			<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-5">
 				
 				@foreach (var item in Model)
 				{
@@ -83,7 +100,7 @@
 									</p>
 								</div>
 							</a>
-							<div class="card-footer d-flex justify-content-between">
+								<div class="card-footer mt-auto d-flex justify-content-between">
 								<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">
 									<button class="btn btn-sm btn-success"><i class="bi bi-cart"></i>  Add to cart</button>
 								</form>

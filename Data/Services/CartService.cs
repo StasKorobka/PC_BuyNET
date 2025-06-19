@@ -30,6 +30,12 @@ namespace PC_BuyNET.Data.Services
                 .FirstOrDefaultAsync(ci => ci.Id == cartItemId);
         }
 
+        public async Task<List<CartItem>> GetCartItemsAsync(string userId)
+        {
+            var cart = await GetCartByUserIdAsync(userId);
+
+            return cart?.CartItems ?? new List<CartItem>();
+        }
         public async Task DeleteCartItemAsync(string userId, CartItem cartitem)
         {
             var cart = await GetCartByUserIdAsync(userId);
@@ -45,6 +51,15 @@ namespace PC_BuyNET.Data.Services
                     cart.CartItems.Remove(cartitem);
                 }
 
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task ClearCartAsync(string userId)
+        {
+            var cart = await GetCartByUserIdAsync(userId);
+            if (cart != null)
+            {
+                cart.CartItems.Clear();
                 await _context.SaveChangesAsync();
             }
         }

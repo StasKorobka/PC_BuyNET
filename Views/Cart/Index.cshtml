@@ -20,48 +20,52 @@
 
 </head>
 <body>
-	@if (Model.CartItems.Count == 0)
-	{
-		<h4>Your cart is empty.</h4>
-	}
-	else
-	{
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>CartItemId</th>
-					<th>Quantity</th>
-					<th>Price</th>
-					<th>Delete</th>
-				</tr>
-			</thead>
-			<tbody>
+@if (Model.CartItems.Count == 0)
+{
+	<h4>Your cart is empty.</h4>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>CartItemId</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
 						
-				@foreach (var item in Model.CartItems)
-				{
-					<tr>
-						<td>@item.Item.Name</td>
-						<td>@item.Id</td>
-						<td>@item.Quantity</td>
-						<td>@item.Item.Price.FormatAsUSD()</td>
-						<td colspan="2">
-							<form method="post" asp-controller="Cart" asp-action="Delete" 
-							 		asp-route-cartItemId="@item.Id"> 
-							 	<input type="hidden" name="itemId" value="@item.Id" /> 
-							 	<button type="submit" class="btn btn-danger">Remove</button> 
-							 </form>
+			@foreach (var item in Model.CartItems)
+			{
+				<tr>
+					<td>@item.Item.Name</td>
+					<td>@item.Id</td>
+					<td>@item.Quantity</td>
+					<td>@item.Item.Price.FormatAsUSD()</td>
+					<td colspan="2">
+						<form method="post" asp-controller="Cart" asp-action="Delete" 
+							 	asp-route-cartItemId="@item.Id"> 
+							<input type="hidden" name="itemId" value="@item.Id" /> 
+							<button type="submit" class="btn btn-danger">Remove</button> 
+							</form>
 							
-						</td>
-					</tr>
+					</td>
+				</tr>
 
-				}
+			}
 			
-		</table>
+	</table>
 
-		<div class="text-md-start text-success">
-			Total price: @totalPrice.FormatAsUSD()
-		</div>
-	}
+	<div class="text-md-start text-success">
+		Total price: @totalPrice.FormatAsUSD()
+	</div>
+
+		<a class="btn btn-success" asp-controller="Order" asp-action="Index">
+			<i class="bi bi-bag"></i> Order now
+		</a>
+}
 </body>
 </html>

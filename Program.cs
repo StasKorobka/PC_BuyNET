@@ -34,13 +34,14 @@ namespace PC_BuyNET
             builder.Services.AddScoped<CartService>();
             builder.Services.AddScoped<SearchService>();
             builder.Services.AddScoped<CategoryService>();
+            builder.Services.AddScoped<OrderService>();
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
             })
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<PC_BuyNETDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<PC_BuyNETDbContext>();
 
             var app = builder.Build();
 

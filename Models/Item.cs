@@ -24,7 +24,7 @@ namespace PC_BuyNET.Models
         public string? ImageUrl { get; set; } = "https://cdn.pixabay.com/photo/2016/10/21/20/45/texture-1759179_640.jpg";
 
         
-        private const int MaxDescriptionLength = 60;
+        private const int MaxDescriptionLength = 54;
         public static string Truncate(string value, int maxLength=MaxDescriptionLength)
         {
             if (string.IsNullOrEmpty(value)) return value;

@@ -66,12 +66,18 @@ namespace PC_BuyNET.Controllers
             return View(item);
         }
 
-        public async Task<IActionResult> Search(string? searchQuery, string? category, decimal? maxPrice)
+        [HttpPost]
+        public async Task<IActionResult> Search(string? searchQuery, string? category, decimal? maxPrice, string priceOrder)
         {
-            var items = await _searchService.SearchItemsAsync(searchQuery, category, maxPrice);
+            var items = await _searchService.SearchItemsAsync(searchQuery, category, maxPrice, priceOrder);
             var categories = await _categoryService.GetCategoriesAsync();
 
             ViewBag.Categories = categories;
+
+            
+            ViewBag.SelectedCategory = category ?? "All";
+            ViewBag.SearchQuery = searchQuery ?? string.Empty;
+            ViewBag.MaxPrice = maxPrice ?? 1000;
 
             if (items == null || items.Count == 0)
             {

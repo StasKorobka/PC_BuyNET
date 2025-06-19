@@ -10,6 +10,7 @@ namespace PC_BuyNET.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public PC_BuyNETDbContext(DbContextOptions<PC_BuyNETDbContext> options)
             : base(options) 
@@ -139,7 +140,7 @@ namespace PC_BuyNET.Data
                 new Item
                 {
                     Id = 9,
-                    Name = "MSI PRO 24.5-inch IPS 1920 x 1080 (FHD) Gaming Office Monitor",
+                    Name = "MSI PRO 24.5-inch IPS (FHD) Gaming Office Monitor",
                     Description = "24.5-inch Broadened Display – Enjoy the upgraded canvas in the limited space.",
                     CategoryId = 4,
                     Price = 97.50m,

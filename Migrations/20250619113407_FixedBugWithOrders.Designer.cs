@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC_BuyNET.Data;
 
@@ -11,9 +12,11 @@ using PC_BuyNET.Data;
 namespace PC_BuyNET.Migrations
 {
     [DbContext(typeof(PC_BuyNETDbContext))]
-    partial class PC_BuyNETDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619113407_FixedBugWithOrders")]
+    partial class FixedBugWithOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,7 +254,7 @@ namespace PC_BuyNET.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
+                    b.Property<int>("CartId")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemId")
@@ -538,7 +541,9 @@ namespace PC_BuyNET.Migrations
                 {
                     b.HasOne("PC_BuyNET.Models.Cart", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PC_BuyNET.Models.Item", "Item")
                         .WithMany()

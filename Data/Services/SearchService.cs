@@ -14,7 +14,8 @@ namespace PC_BuyNET.Data.Services
             _itemService = itemService;
         }
 
-        public async Task<List<Item>> SearchItemsAsync(string? searchQuerry, string? category, decimal? maxPrice )
+        public async Task<List<Item>> SearchItemsAsync(string? searchQuerry, string? category,
+            decimal? maxPrice, string priceOrder )
         {
             var items = _context.Items
                 .Include(category => category.Category)
@@ -35,6 +36,15 @@ namespace PC_BuyNET.Data.Services
             if (maxPrice.HasValue)
                 items = items.Where(i => i.Price <= maxPrice.Value);
 
+
+            if (priceOrder == "Ascending")
+            {
+                items = items.OrderBy(i => i.Price);
+            }
+            else if (priceOrder == "Descending")
+            {
+                items = items.OrderByDescending(i => i.Price);
+            }
 
             return await items.ToListAsync();
         }
