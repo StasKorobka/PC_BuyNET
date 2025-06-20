@@ -35,6 +35,8 @@ namespace PC_BuyNET
             builder.Services.AddScoped<SearchService>();
             builder.Services.AddScoped<CategoryService>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<ReviewService>();
+
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {

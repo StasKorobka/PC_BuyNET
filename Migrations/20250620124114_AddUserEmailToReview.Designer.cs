@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC_BuyNET.Data;
 
@@ -11,9 +12,11 @@ using PC_BuyNET.Data;
 namespace PC_BuyNET.Migrations
 {
     [DbContext(typeof(PC_BuyNETDbContext))]
-    partial class PC_BuyNETDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250620124114_AddUserEmailToReview")]
+    partial class AddUserEmailToReview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

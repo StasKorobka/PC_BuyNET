@@ -20,7 +20,9 @@ namespace PC_BuyNET.Data.Services
 
         public async Task<Item> GetItemByIdAsync(int id)
         {
-            return await _context.Items.FindAsync(id);
+            return await _context.Items
+                .Include(i => i.Reviews)
+                .FirstOrDefaultAsync(I => I.Id == id);
         }
 
         public async Task AddItemAsync(Item item)

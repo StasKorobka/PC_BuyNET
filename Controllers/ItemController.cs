@@ -16,14 +16,15 @@ namespace PC_BuyNET.Controllers
         private readonly CartService _cartService;
         private readonly CategoryService _categoryService;
         private readonly SearchService _searchService;
+        private readonly ReviewService _reviewService;
         private readonly UserManager<User> _userManager;
-
 
         public ItemController(PC_BuyNETDbContext context,
             ItemService itemService,
             CartService cartService,
             CategoryService categoryService,
             SearchService searchService,
+            ReviewService reviewService,
             UserManager<User> userManager)
         {
             _context = context;
@@ -31,6 +32,7 @@ namespace PC_BuyNET.Controllers
             _cartService = cartService;
             _categoryService = categoryService;
             _searchService = searchService;
+            _reviewService = reviewService;
             _userManager = userManager;
         }
 
@@ -46,12 +48,12 @@ namespace PC_BuyNET.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Buy(int itemId)
+        public async Task Buy(int itemId)
         {
             var userId = _userManager.GetUserId(User);
             await _cartService.AddItemToCartAsync(userId, itemId);
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ViewItem(int itemID)
@@ -156,6 +158,29 @@ namespace PC_BuyNET.Controllers
 
 
             return NoContent(); // 204
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddReview(int itemId, int rating, string? comment)
+        {
+            try
+            {
+                var userId = _userManager.GetUserId(User);
+                var success = await _reviewService.AddReviewAsync(userId, itemId, rating, comment);
+                if (success)
+                {
+                    return Json(new { success = true, message = "Review submitted successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid rating or item not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Failed to submit review." });
+            }
         }
     }
 }

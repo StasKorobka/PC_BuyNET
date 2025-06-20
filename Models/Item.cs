@@ -23,8 +23,11 @@ namespace PC_BuyNET.Models
 
         public string? ImageUrl { get; set; } = "https://cdn.pixabay.com/photo/2016/10/21/20/45/texture-1759179_640.jpg";
 
-        
+        public List<Review> Reviews { get; set; } = new List<Review>();
+
+
         private const int MaxDescriptionLength = 54;
+
         public static string Truncate(string value, int maxLength=MaxDescriptionLength)
         {
             if (string.IsNullOrEmpty(value)) return value;
@@ -35,5 +38,6 @@ namespace PC_BuyNET.Models
         {
             return price.ToString("C2");
         }
+
     }
 }

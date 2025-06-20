@@ -101,9 +101,11 @@
 								</div>
 							</a>
 								<div class="card-footer mt-auto d-flex justify-content-between">
-								<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">
-									<button class="btn btn-sm btn-success"><i class="bi bi-cart"></i>  Add to cart</button>
-								</form>
+								@*<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">*@
+									<button class="btn btn-sm btn-success btn-add-to-cart" data-id="@item.Id">
+										<i class="bi bi-cart"></i>  Add to cart
+									</button>
+								@*</form>*@
 							</div>
 						</div>
 					</div>
@@ -115,13 +117,36 @@
 		</div>
 	</div>
 </div>
-	
-	@* <p> *@
-	@* 	Roles: *@
+
 	@* 	@(User.IsInRole("Admin") ? "Admin" : "Not Admin") *@
-	@* </p> *@
 
 </body>
 </html>
+
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		 $(document).ready(function () {
+			$(".btn-add-to-cart").click(function (e) {
+				e.preventDefault(); // Prevent default button behavior
+
+				var itemId = $(this).data("id");
+
+				$.ajax({
+					url: '/Item/Buy',
+					type: 'POST',
+					data: { itemId: itemId }, // Send itemId as form data
+					success: function (response) {
+						
+					},
+					error: function () {
+						alert("An error occurred while adding the item to the cart.");
+					}
+				});
+			});
+		});
+	</script>
+}
 
 
