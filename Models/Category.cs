@@ -6,6 +6,6 @@
 
         public string Name { get; set; } = "Category";
         
-        List<Item> Items { get; set; } = new List<Item>();
+        public List<Item> Items { get; set; } = new List<Item>();
     }
 }

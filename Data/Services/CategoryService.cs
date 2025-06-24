@@ -18,6 +18,20 @@ namespace PC_BuyNET.Data.Services
                 .ToListAsync();
         }
 
+        public async Task<List<Category>> GetCategoriesWithItemsAsync()
+        {
+            return await _context.Categories
+                .Include(c => c.Items)
+                .ToListAsync();
+        }
+
+        public async Task AddCategory(Category category)
+        {
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+
+        }
+
         public async Task<Category> GetCategoryByIdAsync(int categoryId)
         {
             return await _context.Categories

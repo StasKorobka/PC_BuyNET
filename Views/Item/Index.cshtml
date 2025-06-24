@@ -1,5 +1,4 @@
 ﻿@model List<Item>
-
 @{
 	ViewData["Title"] = "Item list";
 	var categories = ViewBag.Categories as List<Category>;
@@ -7,6 +6,8 @@
 	var selectedCategory = ViewBag.SelectedCategory as string ?? "All";
 	var maxPrice = ViewBag.MaxPrice ?? 1000;
 	var searchQuery = ViewBag.SearchQuery as string ?? string.Empty;
+
+
 }
 
 <!DOCTYPE html>
@@ -96,16 +97,17 @@
 
 									<p class="card-text">
 										<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
-										<strong>Category:</strong> @item.Category.Name
+										<strong>Category:</strong> @item.Category.Name <br />
+											<strong>Rating:</strong> @item.AverageRating.ToString("0.0") ★
 									</p>
 								</div>
 							</a>
 								<div class="card-footer mt-auto d-flex justify-content-between">
-								@*<form method="post" asp-controller="Item" asp-action="Buy" asp-route-itemId="@item.Id">*@
-									<button class="btn btn-sm btn-success btn-add-to-cart" data-id="@item.Id">
-										<i class="bi bi-cart"></i>  Add to cart
-									</button>
-								@*</form>*@
+								
+								<button class="btn btn-sm btn-success btn-add-to-cart" data-id="@item.Id">
+									<i class="bi bi-cart"></i>  Add to cart
+								</button>
+								
 							</div>
 						</div>
 					</div>
@@ -117,8 +119,6 @@
 		</div>
 	</div>
 </div>
-
-	@* 	@(User.IsInRole("Admin") ? "Admin" : "Not Admin") *@
 
 </body>
 </html>

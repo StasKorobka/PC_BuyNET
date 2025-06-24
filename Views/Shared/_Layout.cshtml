@@ -25,10 +25,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">Shop</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-                        </li>
-
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link icon-md" asp-area="" asp-controller="Cart" asp-action="Index">
+                                    <i class="bi bi-cart2"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link icon-md" asp-area="" asp-controller="Wishlist" asp-action="Index">
+                                    <i class="bi bi-bookmark"></i>
+                                </a>
+                            </li>
+                        }
+                        
                         <!-- Center section: Search Bar -->
                         <div class="flex-fill d-flex justify-content-center" >
                             @Html.Partial("_SearchForm")
@@ -37,7 +47,7 @@
                     </ul>
                     @if(User.IsInRole("Admin"))
                     {
-                        <a class="nav-link text-dark" asp-controller="Item" asp-action="Manage">Manager</a>
+                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Manage">Manager</a>
                     }
                     
                     <partial name="_LoginPartial" />
@@ -47,7 +57,7 @@
         </nav>
     </header>
     <div class="container" style="margin:0px;">
-        <main role="main" class="pb-3">
+        <main role="main" class="" style="margin-right:-190px">
             @RenderBody()
         </main>
     </div>

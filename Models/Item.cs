@@ -25,6 +25,14 @@ namespace PC_BuyNET.Models
 
         public List<Review> Reviews { get; set; } = new List<Review>();
 
+        public decimal AverageRating
+        {
+            get
+            {
+                if (Reviews.Count == 0) return 0;
+                return (decimal)Reviews.Average(r => (int)r.Rating);
+            }
+        }
 
         private const int MaxDescriptionLength = 54;
 
@@ -39,5 +47,6 @@ namespace PC_BuyNET.Models
             return price.ToString("C2");
         }
 
+        
     }
 }

@@ -2,6 +2,10 @@
 @{
 	string itemName = Model.Name;
 	ViewData["Title"] = itemName;
+
+	bool userHasReviewes = ViewBag.UserHasReviewes ?? false;
+	int reviewId = ViewBag.ReviewId ?? 0;
+	bool isInWishlist = ViewBag.IsInWishlist ?? false;
 }
 
 <!DOCTYPE html>
@@ -29,9 +33,27 @@
 						<h4 class="text-success fw-bold">Price: $@Model.Price</h4>
 
 						<div class="mt-4 d-flex gap-2">
-							<button class="btn btn-outline-primary btn-add-to-cart" data-id="@Model.Id">
+							<button class="btn btn-outline-success btn-add-to-cart" data-id="@Model.Id">
 								<i class="bi bi-cart-plus"></i> Add to Cart
 							</button>
+							@if (!isInWishlist) 
+							{
+								<form asp-controller="Wishlist" asp-action="Add" method="post">
+									@Html.AntiForgeryToken()
+									<input type="hidden" name="itemId" value="@Model.Id" />
+									<button type="submit" class="btn btn-outline-secondary">
+										<i class="bi bi-bookmark-plus"></i> Add to Wishlist
+									</button>
+								</form>
+							}
+							else
+							{
+								<a asp-controller="Wishlist" asp-action="Index" 
+									class="btn btn-outline-secondary">
+									<i class="bi bi-bookmark-fill"></i>
+								</a>
+							}
+							
 							<a asp-controller="Item" asp-action="Index" class="btn btn-secondary">← Back to Shop</a>
 						</div>
 					</div>
@@ -46,25 +68,33 @@
 			<h4 class="card-title">Add Your Review</h4>
 			@if (User.Identity.IsAuthenticated)
 			{
-				@Html.AntiForgeryToken()
-				<form id="reviewForm">
-					<input type="hidden" name="itemId" value="@Model.Id" />
-					<div class="mb-3">
-						<label class="form-label">Rating:</label>
-						<div class="star-rating">
-							@for (int i = 5; i >= 1; i--)
-							{
-								<input type="radio" name="rating" id="star-@i" value="@i" required />
-								<label for="star-@i" class="bi bi-star-fill mx-1"></label>
-							}
+				@if(userHasReviewes)
+				{
+					<p class="text text-capitalize">You already have reviewed this items!</p>
+				}
+				else
+				{
+					@Html.AntiForgeryToken()
+					<form id="reviewForm">
+						<input type="hidden" name="itemId" value="@Model.Id" />
+						<div class="mb-3">
+							<label class="form-label">Rating:</label>
+							<div class="star-rating">
+								@for (int i = 1; i <= 5; i++)
+								{
+									<input type="radio" name="rating" id="star-@i" value="@i" required />
+									<label for="star-@i" class="bi bi-star-fill mx-1"></label>
+								}
+							</div>
 						</div>
-					</div>
-					<div class="mb-3">
-						<label for="comment" class="form-label">Comment (optional):</label>
-						<textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit Review</button>
-				</form>
+						<div class="mb-3">
+							<label for="comment" class="form-label">Comment (optional):</label>
+							<textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit Review</button>
+					</form>
+				}
+				
 			}
 			else
 			{
@@ -81,7 +111,7 @@
 			{
 				foreach (var review in Model.Reviews)
 				{
-					<div class="review mb-3 p-3 border rounded">
+					<div class="review mb-3 p-3 border rounded" id="review-@review.Id">
 						<div class="d-flex justify-content-between">
 							<span><strong>User:</strong> @(review.UserEmail)</span>
 							<span><strong>Rating:</strong> @string.Concat(Enumerable.Repeat("★", (int)review.Rating))</span>
@@ -91,6 +121,16 @@
 							<p class="mt-2"><strong>Comment:</strong> @review.Comment</p>
 						}
 						<small class="text-muted">Posted on: @review.CreatingDate.ToString("g")</small>
+						@if (reviewId != 0 && review.Id == reviewId)
+						{
+							<a href="#" data-review-id="@review.Id"
+							   class="btn btn-sm btn-danger btn-delete-review"><i class="bi bi-trash"></i>
+						   </a>
+							<a class="btn btn-sm btn-secondary" asp-controller="Review" asp-action="Edit"
+							   asp-route-reviewId="@review.Id">
+								<i class="bi bi-pencil-square"></i>
+							</a>
+						}
 					</div>
 				}
 			}
@@ -171,7 +211,41 @@
 						}
 					});
 				});
-			});
+
+				$(".btn-delete-review").click(function (e) {
+					e.preventDefault();
+					var $button = $(this);
+					var reviewId = $button.data("review-id");
+					var token = $("input[name='__RequestVerificationToken']").val();
+
+					if (confirm("Are you sure you want to delete this review?")) {
+						$button.prop("disabled", true);
+						$.ajax({
+							url: '/Review/Delete/' + reviewId,
+							type: 'DELETE',
+							data: { reviewId: reviewId },
+							headers: {
+								RequestVerificationToken: token
+							},
+							success: function (response) {
+								if (response.success) {
+									$("#review-" + reviewId).remove();
+									
+								} else {
+									alert(response.message);
+								}
+							},
+							error: function (xhr) {
+								alert("An error occurred: " + xhr.statusText);
+							},
+							complete: function () {
+								$button.prop("disabled", false);
+							}
+						});
+					}
+				});
+		});
+		
 		</script>
 	}
 </body>

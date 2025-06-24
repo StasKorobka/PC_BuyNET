@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC_BuyNET.Data;
 
@@ -11,9 +12,11 @@ using PC_BuyNET.Data;
 namespace PC_BuyNET.Migrations
 {
     [DbContext(typeof(PC_BuyNETDbContext))]
-    partial class PC_BuyNETDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250622114631_AddAvarageRatingFix")]
+    partial class AddAvarageRatingFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -507,48 +510,6 @@ namespace PC_BuyNET.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("PC_BuyNET.Models.Wishlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Wishlists");
-                });
-
-            modelBuilder.Entity("PC_BuyNET.Models.WishlistItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WishlistId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("WishlistId");
-
-                    b.ToTable("WishlistItems");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -635,7 +596,7 @@ namespace PC_BuyNET.Migrations
             modelBuilder.Entity("PC_BuyNET.Models.Item", b =>
                 {
                     b.HasOne("PC_BuyNET.Models.Category", "Category")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -654,44 +615,9 @@ namespace PC_BuyNET.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("PC_BuyNET.Models.Wishlist", b =>
-                {
-                    b.HasOne("PC_BuyNET.Areas.Identity.Data.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PC_BuyNET.Models.WishlistItem", b =>
-                {
-                    b.HasOne("PC_BuyNET.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PC_BuyNET.Models.Wishlist", "Wishlist")
-                        .WithMany("WishlistItems")
-                        .HasForeignKey("WishlistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Wishlist");
-                });
-
             modelBuilder.Entity("PC_BuyNET.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
-                });
-
-            modelBuilder.Entity("PC_BuyNET.Models.Category", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("PC_BuyNET.Models.Item", b =>
@@ -702,11 +628,6 @@ namespace PC_BuyNET.Migrations
             modelBuilder.Entity("PC_BuyNET.Models.Order", b =>
                 {
                     b.Navigation("CartItems");
-                });
-
-            modelBuilder.Entity("PC_BuyNET.Models.Wishlist", b =>
-                {
-                    b.Navigation("WishlistItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,89 @@
+﻿@model Wishlist
+@{
+	ViewData["Title"] = "Wishlist";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+<body>
+	<h5 class="text-lg-start">Your wishlist</h5>
+	@foreach (var item in Model.WishlistItems)
+	{
+		<div class="card mb-3 border-0 w-100">
+			<div class="card-body d-flex align-items-center">
+				<img src="@item.Item.ImageUrl" alt="@item.Item.Name" class="img-fluid me-3" style="width: 100px; height: 100px; object-fit: cover;" />
+				<div class="flex-grow-1">
+					<h5 class="card-title mb-1">
+						<a asp-controller="Item" asp-action="ViewItem" 
+							asp-route-itemID="@item.ItemId">
+							@item.Item.Name
+						</a>
+					</h5>
+					<p class="card-text text-muted mb-2">@Item.Truncate(@item.Item.Description, 120)</p>
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							<span class="fw-bold">Price:</span> $@item.Item.Price
+							<a href="#" data-wishlist-item-id="@item.Id" 
+								class="btn btn-sm btn-danger btn-delete-wishlist">
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+	@section Scripts {
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".btn-delete-wishlist").click(function (e) {
+					e.preventDefault();
+					var $button = $(this);
+					var wishlistItemId = $button.data("wishlist-item-id");
+					var token = $("input[name='__RequestVerificationToken']").val();
+
+					if (confirm("Are you sure you want to remove this item from your wishlist?")) {
+						$button.prop("disabled", true);
+						$.ajax({
+							url: '/Wishlist/Delete',
+							type: 'DELETE',
+							data: { wishlistItemId: wishlistItemId },
+							headers: {
+								RequestVerificationToken: token
+							},
+							success: function (response) {
+								if (response.url) {
+									window.location.href = response.url;
+								} else {
+									$button.closest(".card").remove();
+									alert("Item removed from wishlist successfully.");
+									if ($(".card").length === 0) {
+										$(".row").replaceWith("<p>Your wishlist is empty.</p>");
+									}
+								}
+							},
+							error: function (xhr) {
+								alert("An error occurred: " + xhr.statusText);
+								if (xhr.status === 401) {
+									window.location.href = "/Identity/Account/Login";
+								}
+							},
+							complete: function () {
+								$button.prop("disabled", false);
+							}
+						});
+					}
+				});
+			});
+		</script>
+	}
+</body>
+</html>

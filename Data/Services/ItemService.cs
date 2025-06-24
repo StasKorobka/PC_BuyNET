@@ -15,6 +15,7 @@ namespace PC_BuyNET.Data.Services
         {
             return await _context.Items
                 .Include(i => i.Category)
+                .Include(i => i.Reviews)
                 .ToListAsync();
         }
 
@@ -49,6 +50,14 @@ namespace PC_BuyNET.Data.Services
             {
                 throw new KeyNotFoundException($"Item with ID {id} not found.");
             }
+        }
+
+        public async Task<decimal> GetAvarageRatingAsync(int id)
+        {
+            var item = await GetItemByIdAsync(id);
+
+            if (item.Reviews.Count == 0) return 0;
+            return (decimal)item.Reviews.Average(r => (int)r.Rating);
         }
     }
 }

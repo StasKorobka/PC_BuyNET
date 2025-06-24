@@ -12,6 +12,9 @@ namespace PC_BuyNET.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<WishlistItem> WishlistItems { get; set; }
+
 
         public PC_BuyNETDbContext(DbContextOptions<PC_BuyNETDbContext> options)
             : base(options) 
@@ -28,6 +31,18 @@ namespace PC_BuyNET.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Wishlist>().HasData(
+                new Wishlist
+                {
+                    Id = 2,
+                    UserId = "edf22709-d7fd-4e67-acb3-43870dd5214c"
+                },
+                new Wishlist
+                {
+                    Id = 3,
+                    UserId = "1"
+                }
+            );
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {

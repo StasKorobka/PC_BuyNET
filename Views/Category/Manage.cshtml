@@ -1,0 +1,45 @@
+﻿@model List<Category>
+@{
+	ViewData["Title"] = "Manage Categories";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+<body>
+	<table class="table table-bordered table-full-width">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Number of items</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var category in Model)
+			{
+				<tr id="row-@category.Id">
+					<td>@category.Id</td>
+					<td>@category.Name</td>
+					<td>@category.Items.Count</td>
+					<td>
+						<a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id">
+							<i class="bi bi-trash"></i> Delete
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<a class="btn btn-primary" asp-controller="Category" asp-action="Create">
+		<i class="bi bi-plus"></i> Create New Category
+	</a>
+</body>
+</html>

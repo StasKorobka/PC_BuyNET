@@ -36,7 +36,7 @@ namespace PC_BuyNET
             builder.Services.AddScoped<CategoryService>();
             builder.Services.AddScoped<OrderService>();
             builder.Services.AddScoped<ReviewService>();
-
+            builder.Services.AddScoped<WishlistService>();
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {

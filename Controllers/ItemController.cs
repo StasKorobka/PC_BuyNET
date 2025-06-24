@@ -17,6 +17,7 @@ namespace PC_BuyNET.Controllers
         private readonly CategoryService _categoryService;
         private readonly SearchService _searchService;
         private readonly ReviewService _reviewService;
+        private readonly WishlistService _wishlistService;
         private readonly UserManager<User> _userManager;
 
         public ItemController(PC_BuyNETDbContext context,
@@ -25,6 +26,7 @@ namespace PC_BuyNET.Controllers
             CategoryService categoryService,
             SearchService searchService,
             ReviewService reviewService,
+            WishlistService wishlistService,
             UserManager<User> userManager)
         {
             _context = context;
@@ -33,6 +35,7 @@ namespace PC_BuyNET.Controllers
             _categoryService = categoryService;
             _searchService = searchService;
             _reviewService = reviewService;
+            _wishlistService = wishlistService;
             _userManager = userManager;
         }
 
@@ -65,7 +68,26 @@ namespace PC_BuyNET.Controllers
                 return NotFound();
             }
 
+            var userId = _userManager.GetUserId(User);
+
+            try
+            {
+                bool isInWishlist = await _wishlistService.IsItemInWishlistAsync(userId, itemID);
+                bool userHasReviewes = await _reviewService.HasReview(userId, itemID);
+                int reviewId = await _reviewService.GetReviewIdByUserId(userId, itemID);
+
+                ViewBag.IsInWishlist = isInWishlist;
+                ViewBag.ReviewId = reviewId;
+                ViewBag.UserHasReviewes = userHasReviewes;
+            }
+            catch
+            {
+                ViewBag.UserHasReviewes = false;
+            }
+            
             return View(item);
+            
+            
         }
 
         [HttpPost]

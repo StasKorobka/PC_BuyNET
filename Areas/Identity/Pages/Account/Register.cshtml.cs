@@ -126,7 +126,7 @@ namespace PC_BuyNET.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    // Create cart for new user
+                    //create cart for new user
                     var cart = new Cart
                     {
                         UserId = user.Id,
@@ -134,6 +134,16 @@ namespace PC_BuyNET.Areas.Identity.Pages.Account
                     };
                     _context.Carts.Add(cart);
                     await _context.SaveChangesAsync();
+
+                    //creating wishlist for new user
+                    var wishlist = new Wishlist
+                    {
+                        UserId = user.Id
+                    };
+
+                    _context.Wishlists.Add(wishlist);
+                    await _context.SaveChangesAsync();
+
 
                     _logger.LogInformation("User created a new account with password.");
 

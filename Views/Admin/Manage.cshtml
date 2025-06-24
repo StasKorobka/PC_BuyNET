@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Manage Items";
 }
 
 <!DOCTYPE html>
@@ -12,9 +12,10 @@
 
 </head>
 <body>
-	<div class="text-center">
-		<h1 class="display-4 text-capitalize">Welcome to the PC BUY NET !</h1>
+	<h3>Manage:</h3>
+	<div class="manage-buttons">
+		<a class="btn btn-primary custom-btn-bg" asp-controller="Item" asp-action="Manage">Items</a>
+		<a class="btn btn-primary custom-btn-bg" asp-controller="Category" asp-action="Manage">Categories</a>
 	</div>
 </body>
 </html>
-
