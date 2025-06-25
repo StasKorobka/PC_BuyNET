@@ -53,26 +53,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			// Star rating interaction (visual only, no AJAX)
-			$('.star-rating label').hover(
-				function () {
-					$(this).addClass('selected').prevAll('.bi-star-fill').addClass('selected');
-					$(this).nextAll('.bi-star-fill').removeClass('selected');
-				},
-				function () {
-					$('.star-rating .bi-star-fill').removeClass('selected');
-					$('.star-rating input:checked').next('.bi-star-fill').addClass('selected').prevAll('.bi-star-fill').addClass('selected');
-				}
-			);
-
-			$('.star-rating input').click(function () {
-				$('.star-rating .bi-star-fill').removeClass('selected');
-				$(this).next('.bi-star-fill').addClass('selected').prevAll('.bi-star-fill').addClass('selected');
-			});
-		});
-	</script>
+	<script src="~/js/ViewItem.js"></script>
 }
 </body>
 </html>

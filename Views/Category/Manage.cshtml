@@ -30,7 +30,7 @@
 					<td>@category.Name</td>
 					<td>@category.Items.Count</td>
 					<td>
-						<a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id">
+						<a class="btn btn-danger delete-category-btn" data-category-id="@category.Id">
 							<i class="bi bi-trash"></i> Delete
 						</a>
 					</td>
@@ -41,5 +41,10 @@
 	<a class="btn btn-primary" asp-controller="Category" asp-action="Create">
 		<i class="bi bi-plus"></i> Create New Category
 	</a>
+
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="~/js/Admin.js"></script>
+}
 </body>
 </html>

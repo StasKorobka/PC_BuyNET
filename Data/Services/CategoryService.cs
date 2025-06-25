@@ -37,5 +37,16 @@ namespace PC_BuyNET.Data.Services
             return await _context.Categories
                 .FirstOrDefaultAsync(c => c.Id == categoryId);
         }
+
+        public async Task DeleteCategoryAsync(int categoryId)
+        {
+            var category = await GetCategoryByIdAsync(categoryId);
+
+            if (category != null)
+            {
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

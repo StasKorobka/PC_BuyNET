@@ -7,7 +7,6 @@
 	var maxPrice = ViewBag.MaxPrice ?? 1000;
 	var searchQuery = ViewBag.SearchQuery as string ?? string.Empty;
 
-
 }
 
 <!DOCTYPE html>
@@ -98,7 +97,7 @@
 									<p class="card-text">
 										<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
 										<strong>Category:</strong> @item.Category.Name <br />
-											<strong>Rating:</strong> @item.AverageRating.ToString("0.0") ★
+										<strong>Rating:</strong> @item.AverageRating.ToString("0.0") 
 									</p>
 								</div>
 							</a>
@@ -125,28 +124,7 @@
 
 @section Scripts {
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-	<script>
-		 $(document).ready(function () {
-			$(".btn-add-to-cart").click(function (e) {
-				e.preventDefault(); // Prevent default button behavior
-
-				var itemId = $(this).data("id");
-
-				$.ajax({
-					url: '/Item/Buy',
-					type: 'POST',
-					data: { itemId: itemId }, // Send itemId as form data
-					success: function (response) {
-						
-					},
-					error: function () {
-						alert("An error occurred while adding the item to the cart.");
-					}
-				});
-			});
-		});
-	</script>
+	<script src="~/js/Cart.js"></script>
 }
 
 

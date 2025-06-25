@@ -30,7 +30,6 @@ else
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th>CartItemId</th>
 				<th>Quantity</th>
 				<th>Price</th>
 				<th>Delete</th>
@@ -42,7 +41,6 @@ else
 			{
 				<tr>
 					<td>@item.Item.Name</td>
-					<td>@item.Id</td>
 					<td>@item.Quantity</td>
 					<td>@item.Item.Price.FormatAsUSD()</td>
 					<td colspan="2">
@@ -50,7 +48,7 @@ else
 							 	asp-route-cartItemId="@item.Id"> 
 							<input type="hidden" name="itemId" value="@item.Id" /> 
 							<button type="submit" class="btn btn-danger">Remove</button> 
-							</form>
+						</form>
 							
 					</td>
 				</tr>

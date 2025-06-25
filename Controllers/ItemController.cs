@@ -182,27 +182,5 @@ namespace PC_BuyNET.Controllers
             return NoContent(); // 204
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> AddReview(int itemId, int rating, string? comment)
-        {
-            try
-            {
-                var userId = _userManager.GetUserId(User);
-                var success = await _reviewService.AddReviewAsync(userId, itemId, rating, comment);
-                if (success)
-                {
-                    return Json(new { success = true, message = "Review submitted successfully." });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Invalid rating or item not found." });
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Failed to submit review." });
-            }
-        }
     }
 }

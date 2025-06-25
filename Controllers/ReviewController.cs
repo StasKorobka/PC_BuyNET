@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data.Services;
 
@@ -56,7 +55,7 @@ namespace PC_BuyNET.Controllers
                 {
                     return NotFound();
                 }
-                return View(review); // Re-render form with validation errors
+                return View(review);
             }
 
             var updatedReview = await _reviewService.EditReviewAsync(reviewId, userId, rating, comment);
@@ -72,6 +71,29 @@ namespace PC_BuyNET.Controllers
             }
 
             return RedirectToAction("ViewItem", "Item", new { itemId = itemId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Add(int itemId, int rating, string? comment)
+        {
+            try
+            {
+                var userId = _userManager.GetUserId(User);
+                var success = await _reviewService.AddReviewAsync(userId, itemId, rating, comment);
+                if (success)
+                {
+                    return Json(new { success = true, message = "Review submitted successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid rating or item not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Failed to submit review." });
+            }
         }
     }
 }
