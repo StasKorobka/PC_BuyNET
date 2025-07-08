@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data;
 using PC_BuyNET.Data.Services;
+using PC_BuyNET.Data.Services.Interfaces;
 using PC_BuyNET.Models;
 
 namespace PC_BuyNET.Controllers
@@ -20,6 +21,8 @@ namespace PC_BuyNET.Controllers
         private readonly WishlistService _wishlistService;
         private readonly UserManager<User> _userManager;
 
+        private readonly ILoggingService _logger;
+
         public ItemController(PC_BuyNETDbContext context,
             ItemService itemService,
             CartService cartService,
@@ -27,7 +30,8 @@ namespace PC_BuyNET.Controllers
             SearchService searchService,
             ReviewService reviewService,
             WishlistService wishlistService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ILoggingService logger)
         {
             _context = context;
             _itemService = itemService;
@@ -37,6 +41,7 @@ namespace PC_BuyNET.Controllers
             _reviewService = reviewService;
             _wishlistService = wishlistService;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -56,15 +61,15 @@ namespace PC_BuyNET.Controllers
             var userId = _userManager.GetUserId(User);
             await _cartService.AddItemToCartAsync(userId, itemId);
 
-            //return RedirectToAction("Index");
+            _logger.LogInformation($"Item with ID {itemId} added to cart for user {userId}.");
         }
-
         public async Task<IActionResult> ViewItem(int itemID)
         {
             var item = await _itemService.GetItemByIdAsync(itemID);
 
             if (item == null)
             {
+                _logger.LogError($"Item with ID {itemID} not found.");
                 return NotFound();
             }
 
@@ -102,6 +107,7 @@ namespace PC_BuyNET.Controllers
             ViewBag.SelectedCategory = category ?? "All";
             ViewBag.SearchQuery = searchQuery ?? string.Empty;
             ViewBag.MaxPrice = maxPrice ?? 1000;
+            ViewBag.PriceOrder = priceOrder ?? "Ascending";
 
             if (items == null || items.Count == 0)
             {
@@ -175,6 +181,7 @@ namespace PC_BuyNET.Controllers
             }
             catch (KeyNotFoundException ex)
             {
+                _logger.LogWarning($"Attempted to delete item with ID {id}, but it was not found: {ex.Message}");
                 return NotFound(ex.Message);
             }
 

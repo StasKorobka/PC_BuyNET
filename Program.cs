@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data;
 using PC_BuyNET.Data.Services;
+using PC_BuyNET.Data.Services.Interfaces;
 
 namespace PC_BuyNET
 {
@@ -14,15 +15,13 @@ namespace PC_BuyNET
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-           
+
             builder.Services.AddDbContext<PC_BuyNETDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                    options.UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<PC_BuyNETDbContext>();
-
+            //add admin role policy
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
@@ -38,6 +37,10 @@ namespace PC_BuyNET
             builder.Services.AddScoped<ReviewService>();
             builder.Services.AddScoped<WishlistService>();
 
+            //logging service   
+            builder.Services.AddScoped<ILoggingService, LoggingService>();
+
+            //identity configuration
             builder.Services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;

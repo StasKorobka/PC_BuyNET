@@ -6,7 +6,7 @@
 	var selectedCategory = ViewBag.SelectedCategory as string ?? "All";
 	var maxPrice = ViewBag.MaxPrice ?? 1000;
 	var searchQuery = ViewBag.SearchQuery as string ?? string.Empty;
-
+	var priceOrder = ViewBag.PriceOrder as string ?? "Ascending";
 }
 
 <!DOCTYPE html>
@@ -19,102 +19,101 @@
 
 </head>
 <body>
-	@if (ViewBag.Message != null)
-	{
-		<h2 class="text-center">@ViewBag.Message</h2>
-	}
-	else
-	{
-		<h3 class="item-list-title">Item list</h3>
-	})
+
+@if (ViewBag.Message != null)
+{
+	<h2 class="text-center">@ViewBag.Message</h2>
+}
+else
+{
+	<h3 class="item-list-title">Item list</h3>
+})
 
 
-	<div class="mt-4">
-		<div class="row gx-0">
-			<!-- Sidebar -->
-			<div class="col-md-2" style="margin-top:-75px; margin-left:-10px">
-				<div class="card shadow-sm p-3 sticky-top h-100 rounded-0 border-end" style="top: 1rem;">
-					<form method="post" asp-controller="Item" asp-action="Search">
-						<h5 class="mb-3">Filter Items</h5>
+<div class="mt-4">
+	<div class="row gx-0">
+		<!-- Sidebar -->
+		<div class="col-md-2" style="margin-top:-75px; margin-left:-10px">
+			<div class="card shadow-sm p-3 sticky-top h-100 rounded-0 border-end" style="top: 1rem;">
+				<form method="post" asp-controller="Item" asp-action="Search">
+					<h5 class="mb-3">Filter Items</h5>
 
-						<!-- Category Selector -->
-						<div class="mb-3">
-							<label for="category" class="form-label">Category</label>
-							<select class="form-select"  id="category" name="category">
+					<!-- Category Selector -->
+					<div class="mb-3">
+						<label for="category" class="form-label">Category</label>
+						<select class="form-select"  id="category" name="category">
+							<option value="All" selected="@(selectedCategory == "All" ? "selected" : null)">All</option>
+															
+							@foreach (var category in categories)
+							{
+								<option value="@category.Name" selected="@(category.Name == selectedCategory ? "selected" : null)">
+									@category.Name
+								</option>
+							}
 								
-								<option value="All">All</option>
-								@foreach (var category in categories)
-								{
-									<option value="@category.Name">@category.Name</option>
-								}
-								
-							</select>
-						</div>
+						</select>
+					</div>
 
-						<!-- Price Range -->
-						<div class="mb-3">
-							<label for="priceRange" class="form-label">Max Price: <span id="priceLabel">1000</span></label>
-							<input type="range" class="form-range" id="priceRange" name="maxPrice" min="0" max="5000" value="@maxPrice" oninput="priceLabel.innerText = this.value">
-						</div>
+					<!-- Price Range -->
+					<div class="mb-3">
+						<label for="priceRange" class="form-label">
+							Max Price: <span id="priceLabel">@maxPrice</span>
+						</label>
+						<input type="range" class="form-range" id="priceRange" name="maxPrice"
+								min="0" max="4000" value="@maxPrice"
+								oninput="priceLabel.innerText = this.value">
 
-						<!-- Price order Selector -->
-						<div class="mb-3">
-							<label for="category" class="form-label">Filer price by</label>
-							<select class="form-select" id="category" name="priceOrder">
-									<option value="Ascending">Ascending</option>
-									<option value="Descending">Descending</option>
-							</select>
-						</div>
+					</div>
 
-						<!-- Filter Button -->
-						<button type="submit" class="btn btn-primary w-100">Apply Filters</button>
-					</form>
+					<!-- Price order Selector -->
+					<div class="mb-3">
+						<label for="category" class="form-label">Filer price by</label>
+						<select class="form-select" id="category" name="priceOrder">
+							<option value="Ascending" selected="@(priceOrder == "Ascending" ? "selected" : null)">Ascending</option>
+							<option value="Descending" selected="@(priceOrder == "Descending" ? "selected" : null)">Descending</option>
+						</select>
+						
+					</div>
+
+					<!-- Filter Button -->
+					<button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+				</form>
 				
-					<a asp-action="Index" class="btn btn-secondary w-50" style="margin-top:12px">
-						<i class="bi bi-arrow-clockwise"></i>
-						Reset
-					</a>
-				</div>
+				<a asp-action="Index" class="btn btn-secondary w-50" style="margin-top:12px">
+					<i class="bi bi-arrow-clockwise"></i>
+					Reset
+				</a>
 			</div>
-			
+		</div>
+
 		<!-- Main Items Content -->
 		<div class="col-md-10">
-			<div class="row row-cols-1 row-cols-md-2 row-cols-md-4 g-5">
-				
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-5">
 				@foreach (var item in Model)
 				{
 					<div class="col">
-						<div class="card h-100 shadow-sm">
-							<a class="link-none" asp-controller="Item" asp-action="ViewItem"
-								asp-route-itemID="@item.Id">
-								<img src="@item.ImageUrl"
-										class="card-img-top" alt="Item image" height="260px"
-										style="object-fit:cover">
+						<div class="card h-100 shadow-sm item-card">
+							<a class="link-none" asp-controller="Item" asp-action="ViewItem" asp-route-itemID="@item.Id">
+								<img src="@item.ImageUrl" class="card-img-top" alt="Item image" height="260px" style="object-fit:cover">
 								<div class="card-body">
 									<h5 class="card-title">@item.Name</h5>
-										<p class="card-text">@Item.Truncate(item.Description)</p>
-
+									<p class="card-text">@Item.Truncate(item.Description)</p>
 									<p class="card-text">
 										<strong>Price:</strong> @item.Price.FormatAsUSD()<br />
 										<strong>Category:</strong> @item.Category.Name <br />
-										<strong>Rating:</strong> @item.AverageRating.ToString("0.0") 
+										<strong>Rating:</strong> @item.AverageRating.ToString("0.0")
 									</p>
 								</div>
 							</a>
-								<div class="card-footer mt-auto d-flex justify-content-between">
-								
+							<div class="card-footer mt-auto d-flex justify-content-between">
 								<button class="btn btn-sm btn-success btn-add-to-cart" data-id="@item.Id">
-									<i class="bi bi-cart"></i>  Add to cart
+									<i class="bi bi-cart"></i> Add to cart
 								</button>
-								
 							</div>
 						</div>
 					</div>
-
 				}
-				
 			</div>
-		
 		</div>
 	</div>
 </div>

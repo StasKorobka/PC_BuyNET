@@ -32,7 +32,7 @@
 							<span class="fw-bold">Price:</span> $@item.Item.Price
 							<a href="#" data-wishlist-item-id="@item.Id" 
 								class="btn btn-sm btn-danger btn-delete-wishlist">
-								<i class="bi bi-trash"></i>
+								Remove From Wishlist
 							</a>
 						</div>
 					</div>
@@ -40,50 +40,9 @@
 			</div>
 		</div>
 	}
-	@section Scripts {
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script>
-			$(document).ready(function () {
-				$(".btn-delete-wishlist").click(function (e) {
-					e.preventDefault();
-					var $button = $(this);
-					var wishlistItemId = $button.data("wishlist-item-id");
-					var token = $("input[name='__RequestVerificationToken']").val();
-
-					if (confirm("Are you sure you want to remove this item from your wishlist?")) {
-						$button.prop("disabled", true);
-						$.ajax({
-							url: '/Wishlist/Delete',
-							type: 'DELETE',
-							data: { wishlistItemId: wishlistItemId },
-							headers: {
-								RequestVerificationToken: token
-							},
-							success: function (response) {
-								if (response.url) {
-									window.location.href = response.url;
-								} else {
-									$button.closest(".card").remove();
-									alert("Item removed from wishlist successfully.");
-									if ($(".card").length === 0) {
-										$(".row").replaceWith("<p>Your wishlist is empty.</p>");
-									}
-								}
-							},
-							error: function (xhr) {
-								alert("An error occurred: " + xhr.statusText);
-								if (xhr.status === 401) {
-									window.location.href = "/Identity/Account/Login";
-								}
-							},
-							complete: function () {
-								$button.prop("disabled", false);
-							}
-						});
-					}
-				});
-			});
-		</script>
-	}
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="~/js/Wishlist.js"></script>
+}
 </body>
 </html>

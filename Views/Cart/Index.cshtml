@@ -30,9 +30,9 @@ else
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th>Quantity</th>
 				<th>Price</th>
-				<th>Delete</th>
+				<th>Quantity</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -41,8 +41,8 @@ else
 			{
 				<tr>
 					<td>@item.Item.Name</td>
-					<td>@item.Quantity</td>
 					<td>@item.Item.Price.FormatAsUSD()</td>
+					<td>@item.Quantity</td>
 					<td colspan="2">
 						<form method="post" asp-controller="Cart" asp-action="Delete" 
 							 	asp-route-cartItemId="@item.Id"> 
@@ -57,13 +57,14 @@ else
 			
 	</table>
 
-	<div class="text-md-start text-success">
-		Total price: @totalPrice.FormatAsUSD()
+
+	<div class="text-md-start ">
+			Total price: <span class="text-success fw-bold"> @totalPrice.FormatAsUSD() </span>
 	</div>
 
-		<a class="btn btn-success" asp-controller="Order" asp-action="Index">
-			<i class="bi bi-bag"></i> Order now
-		</a>
+	<a class="btn btn-success btn-order-now" asp-controller="Order" asp-action="Index">
+		<i class="bi bi-bag"></i> Order now
+	</a>
 }
 </body>
 </html>

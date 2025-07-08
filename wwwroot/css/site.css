@@ -120,3 +120,27 @@ body {
 .btn-delete-wishlist {
     margin-left: 10px;
 }
+/* Cart */
+
+.btn-order-now {
+    margin-top: 12px;
+}
+
+/*Cart Item*/
+.item-card {
+    transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+}
+
+.item-card:hover {
+    transform: scale(1.05); /* 5% larger on hover */
+    z-index: 10; /* Ensure card is above others to avoid overlap */
+}
+
+.link-none {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-none:hover {
+    color: inherit;
+}
