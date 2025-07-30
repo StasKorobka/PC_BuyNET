@@ -28,7 +28,7 @@ namespace PC_BuyNET.Data.Services
                 var order = new Order
                 {
                     UserId = userId,
-                    OrderDate = DateTime.UtcNow,
+                    OrderDate = DateTime.Now,
                     CartItems = new List<CartItem>()
                 };
 

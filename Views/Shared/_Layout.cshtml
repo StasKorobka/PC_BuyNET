@@ -28,13 +28,13 @@
                         @if (!User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link icon-md" asp-area="" asp-controller="Cart" asp-action="Index">
-                                    <i class="bi bi-cart2"></i>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+                                    Cart
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link icon-md" asp-area="" asp-controller="Wishlist" asp-action="Index">
-                                    <i class="bi bi-bookmark"></i>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Wishlist" asp-action="Index">
+                                    Wishlist
                                 </a>
                             </li>
                         }
