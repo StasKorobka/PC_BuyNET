@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PC_BuyNET.Models;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace PC_BuyNET.Data.Services
 {

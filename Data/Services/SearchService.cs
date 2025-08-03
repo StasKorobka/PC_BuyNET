@@ -6,12 +6,10 @@ namespace PC_BuyNET.Data.Services
     public class SearchService
     {
         private readonly PC_BuyNETDbContext _context;
-        private readonly ItemService _itemService;
 
         public SearchService(PC_BuyNETDbContext context, ItemService itemService)
         {
             _context = context;
-            _itemService = itemService;
         }
 
         public async Task<List<Item>> SearchItemsAsync(string? searchQuerry, string? category,

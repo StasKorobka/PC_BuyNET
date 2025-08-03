@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PC_BuyNET.Areas.Identity.Data;
 using PC_BuyNET.Data;
 using PC_BuyNET.Data.Services;
 using PC_BuyNET.Data.Services.Interfaces;
-using PC_BuyNET.Models;
 
 namespace PC_BuyNET.Controllers
 {
