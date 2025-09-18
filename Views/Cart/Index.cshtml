@@ -41,7 +41,18 @@ else
 			{
 				<tr>
 					<td>@item.Item.Name</td>
-					<td>@item.Item.Price.FormatAsUSD()</td>
+					<td>
+						@if(item.Item.Discount > 0)
+						{
+							<span class="fw-bold">  @item.Item.DiscountedPrice.FormatAsUSD()</span>
+								<sub><del>@item.Item.Price.FormatAsUSD()</del></sub>
+							<span> (-@item.Item.Discount%)</span>
+						}
+						else
+						{
+							<span class="fw-bold">@item.Item.Price.FormatAsUSD()</span>
+						}
+					</td>
 					<td>@item.Quantity</td>
 					<td colspan="2">
 						<form method="post" asp-controller="Cart" asp-action="Delete" 

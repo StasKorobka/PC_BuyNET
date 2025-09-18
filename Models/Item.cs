@@ -19,7 +19,11 @@ namespace PC_BuyNET.Models
         public Category Category { get; set; }
 
         [Range(0, 100_000)]
+
         public decimal Price { get; set; }
+
+        [Range(0, 100)]
+        public int? Discount { get; set; } = 0;
 
         public string? ImageUrl { get; set; } = "https://cdn.pixabay.com/photo/2016/10/21/20/45/texture-1759179_640.jpg";
 
@@ -33,6 +37,17 @@ namespace PC_BuyNET.Models
                 return (decimal)Reviews.Average(r => (int)r.Rating);
             }
         }
+        public decimal DiscountedPrice
+        {
+            get
+            {
+                if (Discount.HasValue && Discount.Value > 0 && Discount.Value <= 100)
+                {
+                    return Price - (Price * Discount.Value / 100);
+                }
+                return Price;
+            }
+        }
 
         private const int MaxDescriptionLength = 54;
 
@@ -41,7 +56,6 @@ namespace PC_BuyNET.Models
             if (string.IsNullOrEmpty(value)) return value;
             return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
         }
-
         public static string TruncatePrice(decimal price)
         {
             return price.ToString("C2");

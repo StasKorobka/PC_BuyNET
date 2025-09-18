@@ -30,7 +30,23 @@
 						<h2 class="card-title text-primary">@Model.Name</h2>
 						<h5 class="text-muted mb-3">@Model.Category</h5>
 						<p class="card-text">@Model.Description</p>
-						<h4 class="text-success fw-bold">Price: $@Model.Price</h4>
+						<h4 class="fw-bold">
+							@if(Model.Discount > 0)
+							{
+								<strong>Price:</strong>
+								<span class="text-success">
+									@Model.DiscountedPrice.FormatAsUSD()
+								</span>
+								<sub><del>@Model.Price.FormatAsUSD()</del></sub>
+								<span>(-@Model.Discount.ToString()%)</span>
+							}
+							else
+							{
+								<strong>Price:</strong>
+								<span class="text-success">@Model.Price.FormatAsUSD()</span>
+								<br />
+							}
+						</h4>
 
 						<div class="mt-4 d-flex gap-2">
 							<button class="btn btn-outline-success btn-add-to-cart" data-id="@Model.Id">

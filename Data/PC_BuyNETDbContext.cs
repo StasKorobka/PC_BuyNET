@@ -31,18 +31,18 @@ namespace PC_BuyNET.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Wishlist>().HasData(
-                new Wishlist
-                {
-                    Id = 2,
-                    UserId = "edf22709-d7fd-4e67-acb3-43870dd5214c"
-                },
-                new Wishlist
-                {
-                    Id = 3,
-                    UserId = "1"
-                }
-            );
+            //modelBuilder.Entity<Wishlist>().HasData(
+            //    //new Wishlist
+            //    //{
+            //    //    Id = 2,
+            //    //    UserId = "edf22709-d7fd-4e67-acb3-43870dd5214c"
+            //    //},
+            //    //new Wishlist
+            //    //{
+            //    //    Id = 3,
+            //    //    UserId = "1"
+            //    //}
+            //);
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
@@ -88,6 +88,7 @@ namespace PC_BuyNET.Data
                     Description = "High-performance laptop for gaming.",
                     CategoryId = 1,
                     Price = 1500.00m,
+                    Discount = 5,
                     ImageUrl = "https://my-store.msi.com/cdn/shop/files/Cyborg-15-A13VX-rgb_1_b47f3697-efe5-43d4-b805-03bcbcb38817.png?v=1746417078"
                 },
                 new Item
@@ -106,6 +107,7 @@ namespace PC_BuyNET.Data
                     Description = "Ergonomic gaming mouse with customizable buttons.",
                     CategoryId = 3,
                     Price = 80.00m,
+                    Discount = 10,
                     ImageUrl = "https://m.media-amazon.com/images/I/61QY3V6A-NL.jpg"
                 },
                 new Item
@@ -160,6 +162,7 @@ namespace PC_BuyNET.Data
                     Description = "24.5-inch Broadened Display – Enjoy the upgraded canvas in the limited space.",
                     CategoryId = 4,
                     Price = 97.50m,
+                    Discount = 15,
                     ImageUrl = "https://asset.msi.com/resize/image/global/product/product_1724207954ab05b1ca8782cf0f7ef39ef6ca9a7d56.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png"
                 },
                 new Item

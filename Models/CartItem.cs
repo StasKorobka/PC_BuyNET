@@ -8,6 +8,20 @@
         public int ItemId { get; set; }
         public Item Item { get; set; } = null!;
         public int Quantity { get; set; } = 1;
-        public decimal TotalPrice => Item.Price * Quantity;
+        public decimal TotalPrice 
+        {
+            get
+            {
+                if (Item.Discount > 0)
+                {
+                    return Item.DiscountedPrice * Quantity;
+                }
+                else
+                {
+                    return Item.Price * Quantity;
+                }
+            }
+        }
+            
     }
 }

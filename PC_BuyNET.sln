@@ -5,8 +5,6 @@ VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC_BuyNET", "PC_BuyNET.csproj", "{65299D1F-1E8B-4578-A9CA-CA09B78CE099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC_BuyNET_Tests", "..\PC_BuyNET_Tests\PC_BuyNET_Tests.csproj", "{5F2A04B2-DFDC-49FE-B50C-08A54AC86828}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +15,11 @@ Global
 		{65299D1F-1E8B-4578-A9CA-CA09B78CE099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65299D1F-1E8B-4578-A9CA-CA09B78CE099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65299D1F-1E8B-4578-A9CA-CA09B78CE099}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F2A04B2-DFDC-49FE-B50C-08A54AC86828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F2A04B2-DFDC-49FE-B50C-08A54AC86828}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F2A04B2-DFDC-49FE-B50C-08A54AC86828}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F2A04B2-DFDC-49FE-B50C-08A54AC86828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E8EBD1C-1E72-4725-AD46-E9DBC139CF8E}
 	EndGlobalSection
 EndGlobal

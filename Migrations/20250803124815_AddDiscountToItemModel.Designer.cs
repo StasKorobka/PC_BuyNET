@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC_BuyNET.Data;
 
@@ -11,9 +12,11 @@ using PC_BuyNET.Data;
 namespace PC_BuyNET.Migrations
 {
     [DbContext(typeof(PC_BuyNETDbContext))]
-    partial class PC_BuyNETDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250803124815_AddDiscountToItemModel")]
+    partial class AddDiscountToItemModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,7 +371,7 @@ namespace PC_BuyNET.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "High-performance laptop for gaming.",
-                            Discount = 5,
+                            Discount = 0,
                             ImageUrl = "https://my-store.msi.com/cdn/shop/files/Cyborg-15-A13VX-rgb_1_b47f3697-efe5-43d4-b805-03bcbcb38817.png?v=1746417078",
                             Name = "Gaming Laptop",
                             Price = 1500.00m
@@ -388,7 +391,7 @@ namespace PC_BuyNET.Migrations
                             Id = 3,
                             CategoryId = 3,
                             Description = "Ergonomic gaming mouse with customizable buttons.",
-                            Discount = 10,
+                            Discount = 0,
                             ImageUrl = "https://m.media-amazon.com/images/I/61QY3V6A-NL.jpg",
                             Name = "Gaming Mouse",
                             Price = 80.00m
@@ -448,7 +451,7 @@ namespace PC_BuyNET.Migrations
                             Id = 9,
                             CategoryId = 4,
                             Description = "24.5-inch Broadened Display – Enjoy the upgraded canvas in the limited space.",
-                            Discount = 15,
+                            Discount = 0,
                             ImageUrl = "https://asset.msi.com/resize/image/global/product/product_1724207954ab05b1ca8782cf0f7ef39ef6ca9a7d56.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png",
                             Name = "MSI PRO 24.5-inch IPS (FHD) Gaming Office Monitor",
                             Price = 97.50m

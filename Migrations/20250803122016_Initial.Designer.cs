@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC_BuyNET.Data;
 
@@ -11,9 +12,11 @@ using PC_BuyNET.Data;
 namespace PC_BuyNET.Migrations
 {
     [DbContext(typeof(PC_BuyNETDbContext))]
-    partial class PC_BuyNETDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250803122016_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,8 +346,8 @@ namespace PC_BuyNET.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("Discount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -368,7 +371,7 @@ namespace PC_BuyNET.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "High-performance laptop for gaming.",
-                            Discount = 5,
+                            DiscountPercentage = 7.00m,
                             ImageUrl = "https://my-store.msi.com/cdn/shop/files/Cyborg-15-A13VX-rgb_1_b47f3697-efe5-43d4-b805-03bcbcb38817.png?v=1746417078",
                             Name = "Gaming Laptop",
                             Price = 1500.00m
@@ -378,7 +381,7 @@ namespace PC_BuyNET.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Description = "RGB backlit mechanical keyboard.",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://m.media-amazon.com/images/I/71LBvbVa95L._AC_UF894,1000_QL80_.jpg",
                             Name = "Mechanical Keyboard",
                             Price = 120.00m
@@ -388,7 +391,7 @@ namespace PC_BuyNET.Migrations
                             Id = 3,
                             CategoryId = 3,
                             Description = "Ergonomic gaming mouse with customizable buttons.",
-                            Discount = 10,
+                            DiscountPercentage = 5.00m,
                             ImageUrl = "https://m.media-amazon.com/images/I/61QY3V6A-NL.jpg",
                             Name = "Gaming Mouse",
                             Price = 80.00m
@@ -398,7 +401,7 @@ namespace PC_BuyNET.Migrations
                             Id = 4,
                             CategoryId = 4,
                             Description = "27-inch 144Hz gaming monitor with G-Sync.",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://content.rozetka.com.ua/goods/images/big/404971764.jpg",
                             Name = "Gaming Monitor",
                             Price = 300.00m
@@ -408,7 +411,7 @@ namespace PC_BuyNET.Migrations
                             Id = 5,
                             CategoryId = 5,
                             Description = "PCI-Express 4.0, 12 ГБ, GDDR6, 192 Bit, Boost - 2505 MHz, 3 x DisplayPort 1.4a, 1 x HDMI 2.1а, 8 pin, 200 W, 308 x 120 x 43 mm",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://content2.rozetka.com.ua/goods/images/big/525946530.jpg",
                             Name = "MSI GeForce RTX4070 12Gb VENTUS 3X E1 ",
                             Price = 800.00m
@@ -418,7 +421,7 @@ namespace PC_BuyNET.Migrations
                             Id = 6,
                             CategoryId = 6,
                             Description = "AMD Ryzen 5 5600 (3.5 - 4.4 GHz) / RAM 32 GB / SSD 1 TB / nVidia GeForce RTX 4060, 8 GB / Windows 11 / LAN ",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://content1.rozetka.com.ua/goods/images/big/555282141.jpg",
                             Name = "COBRA Advanced (A56.32.S10.46.19908)",
                             Price = 750.00m
@@ -428,7 +431,7 @@ namespace PC_BuyNET.Migrations
                             Id = 7,
                             CategoryId = 7,
                             Description = "Comfortable gaming headset with surround sound.",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://cdn.27.ua/799/b0/83/7843971_16.jpeg",
                             Name = "Gaming Headset",
                             Price = 100.00m
@@ -438,7 +441,7 @@ namespace PC_BuyNET.Migrations
                             Id = 8,
                             CategoryId = 2,
                             Description = "Low-profile mechanical gaming keyboard with customizable RGB lighting.",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://images.prom.ua/5754698902_w600_h600_5754698902.jpg",
                             Name = "Razer Ornata V3 X Gaming Keyboard",
                             Price = 30.00m
@@ -448,7 +451,7 @@ namespace PC_BuyNET.Migrations
                             Id = 9,
                             CategoryId = 4,
                             Description = "24.5-inch Broadened Display – Enjoy the upgraded canvas in the limited space.",
-                            Discount = 15,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://asset.msi.com/resize/image/global/product/product_1724207954ab05b1ca8782cf0f7ef39ef6ca9a7d56.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png",
                             Name = "MSI PRO 24.5-inch IPS (FHD) Gaming Office Monitor",
                             Price = 97.50m
@@ -458,7 +461,7 @@ namespace PC_BuyNET.Migrations
                             Id = 10,
                             CategoryId = 1,
                             Description = "Intel Celeron N4120, 4 GB RAM, 64 GB eMMC, 14\" HD Display, Chrome OS, Thin Design, 4K Graphics, Long Battery Life, Ash Gray Keyboard",
-                            Discount = 0,
+                            DiscountPercentage = 0m,
                             ImageUrl = "https://hp.widen.net/content/j3evgos0b0/png/j3evgos0b0.png?w=800&h=600&dpi=72&color=ffffff00",
                             Name = "HP Chromebook 14 Laptop",
                             Price = 140.00m
